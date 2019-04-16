@@ -10,13 +10,18 @@ using namespace std;
 
 void pascal(int, vector<int>&);
 void powerset(vector<int>);
-void cartesian(vector<int>, vector<int>);
+void cartesian(vector<int>, vector<int>, vector<vector<int>>&);
+void binaryRelations(vector<int>, vector<int>);
 
 int main()
 {
   vector<int> set = {1, 2, 3, 4};
   vector<int> set2 = {1, 2 ,3};
-  cartesian(set2, set);
+  vector<vector<int>> product;
+  cartesian(set, set2, product);
+  cout << "asdf" << endl;
+  //for(int i = 0; i<product.size(); i++) {
+  //}
 }
 
 //pascal's triangle function which takes an int for the line number and vector to store the values of the line
@@ -71,10 +76,16 @@ void powerset(vector<int> set) {
 }
 
 //finds the cartesian product of two sets
-void cartesian(vector<int> setA, vector<int> setB) {
+void cartesian(vector<int> setA, vector<int> setB, vector<vector<int>>& product) {
+	//vector<vector<int>> product;
     for(int i = 0; i < setA.size(); i++) { //first loop starts at first set and finds all the coordinates for each index 
         for(int j = 0; j < setB.size(); j++) { //second loop is second set and program finishes all of the index of first set
-            cout << setA[i] << ", " << setB[j] << endl; 
+            vector<int> temp = {setA[i], setB[j]}; 
+            product.push_back(temp); 
         }
     }
+}
+
+void binaryRelations(vector<int> p1, vector<int> p2) {
+	int p3 = p1.size() * p2.size();
 }
