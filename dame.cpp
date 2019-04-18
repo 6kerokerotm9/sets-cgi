@@ -7,6 +7,7 @@
 #include <cmath>
 
 using namespace std;
+
 //converts integers into binary similar to the method by hand; accepts a vector to store the binary bit-by-bit, the amount of bits required, and the integer to be converted
 void binaryC(vector<int>& binary, int workingsize, int div) {
   int rem = 1; //variable to hold the remainder during the division processes
@@ -47,21 +48,77 @@ void cartesian(vector<int> setA, vector<int> setB, vector<vector<int>>& product)
   }
 }
 
-int main() {
-  vector<int> working = {1, 2, 3, 4, 5};
-  vector<int> binary;
-  vector<vector<int>> power;
-  int div = (pow(2, working.size())) - 1;
-  binaryC(binary, working.size(), 7);
-  powerset(working, power);
+void evenroll(vector<vector<int>>& product, vector<vector<vector<int>>>& relations) {
+  vector<int> binary; 
+  vector<vector<int>> temp; 
+  int tempsize = (pow(2, product.size())) - 1;
+  for(int i = 0; i < (pow(2, product.size())) - 1; i++) { 
+    binaryC(binary, product.size(), tempsize); 
+    temp = {};
+    for(int j = 0; j < binary.size(); j++) {
+      if(binary[j] == 1) {
+        temp.push_back(product[j]);
+      }
+    }
+    relations.push_back(temp); 
+    tempsize--; 
+    binary = {}; 
+  }
+}
+
+
+void printpower(vector<vector<int>>& power) {
   vector<int> temp;
- for(int i = 0; i<power.size(); i++) {
+  for(int i = 0; i<power.size(); i++) {
     temp = power[i];
     for(int j = 0; j < (power[i]).size(); j++) {
       cout << temp[j] << " ";
     }
     cout << endl;
   }
+}
+
+void printproduct(vector<vector<int>>& product) {
+  vector<int> temp;
+  for(int i = 0; i<product.size(); i++) {
+      temp = product[i];
+      cout << temp[0] << ", " << temp[1] << endl;
+  }
+}
+
+void printeven(vector<vector<vector<int>>>& relations) {
+  vector<int> temp;
+  vector<vector<int>> temp2;
+  for(int i = 0; i<relations.size(); i++) {
+    temp2 = relations[i];
+    for(int j = 0; j < (relations[i]).size(); j++) {
+      temp = relations[i][j];
+      cout << "( ";
+      for(int k = 0; k < (relations[i][j]).size(); k++) {
+        cout << temp[k] << " ";
+      }
+      cout << "), ";
+    }
+    cout << endl;
+  }
+}
+
+int main() {
+  vector<int> working = {1, 2};
+  vector<int> setB = {3, 4};
+  vector<int> binary;
+  vector<vector<int>> power;
+  vector<vector<int>> product;
+  vector<vector<vector<int>>> relations;
+  vector<int> temp;
+  int div = (pow(2, working.size())) - 1;
+  binaryC(binary, working.size(), 7);
+  powerset(working, power);
+  cartesian(working, setB, product);
+  evenroll(product, relations);
+  printpower(power);
+  //printproduct(product);
+  //printeven(relations);
 }
 
 /*for(int i = 0; i < binary.size(); i++) {
@@ -77,4 +134,10 @@ int main() {
     cout << endl;
   }
 
+for(int i = 0; i<product.size(); i++) {
+      temp = product[i];
+      cout << temp[0] << ", " << temp[1] << endl;
+  }
+
+cout << "as" << endl;
 */
