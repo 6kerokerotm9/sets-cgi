@@ -51,18 +51,18 @@ void cartesian(vector<int> setA, vector<int> setB, vector<vector<int>>& product)
 void evenroll(vector<vector<int>>& product, vector<vector<vector<int>>>& relations) {
   vector<int> binary; 
   vector<vector<int>> temp; 
-  int tempsize = (pow(2, product.size())) - 1;
-  for(int i = 0; i < (pow(2, product.size())) - 1; i++) { 
-    binaryC(binary, product.size(), tempsize); 
+  int tempsize = (pow(2, product.size()))-1;
+  binaryC(binary, product.size(), tempsize);
+  for(int i = 0; i < product.size(); i++) {  
     temp = {};
+    binary[i] = 0;
     for(int j = 0; j < binary.size(); j++) {
       if(binary[j] == 1) {
         temp.push_back(product[j]);
       }
     }
     relations.push_back(temp); 
-    tempsize--; 
-    binary = {}; 
+    binary[i] = 1;
   }
 }
 
@@ -123,9 +123,8 @@ int main() {
   powerset(working, power);
   cartesian(working, setB, product);
   evenroll(product, relations);
-  transitive(working);
+  //transitive(working);
   //printpower(power);
   //printproduct(product);
   printeven(relations);
 }
-
