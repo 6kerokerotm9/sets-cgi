@@ -121,23 +121,3 @@ int main() {
   //printeven(relations);
 }
 
-/*for(int i = 0; i < binary.size(); i++) {
-   cout << binary[i] << endl;
-  }
-
- vector<int> temp;
- for(int i = 0; i<power.size(); i++) {
-    temp = power[i];
-    for(int j = 0; j < (power[i]).size(); j++) {
-      cout << temp[j] << " ";
-    }
-    cout << endl;
-  }
-
-for(int i = 0; i<product.size(); i++) {
-      temp = product[i];
-      cout << temp[0] << ", " << temp[1] << endl;
-  }
-
-cout << "as" << endl;
-*/
