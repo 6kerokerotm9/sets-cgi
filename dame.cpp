@@ -88,10 +88,55 @@ void transitive(vector<vector<int>>& power) {
 		    cout << "(" << temp[0] << ", " << temp[1] << "), ";
 		    cout << "(" << temp2[0] << ", " << temp2[1] << "), ";
 		    cout << "(" << temp3[0] << ", " << temp3[1] << "), " << endl;
+		    cout << "</br>";
 		  }
 	    }
 	  }
 	}
+  }
+}
+
+void parse(string qs, vector<int>&setA, vector<int>&setB, vector<int>& boxes)
+{
+  int temp;
+  char temp2;
+  int index = 0;
+  vector<int> set;
+  istringstream ss(qs);
+  for(int i = 0; i < 2; i++) {
+	if(i == 1) {
+		setA = set;
+		set = {};
+	}
+    for(int j = index; j < qs.size(); j++) {
+		ss >> temp2;
+		if(temp2 == '=') {
+		  ss >> temp;
+		  j++;	
+		  set.push_back(temp);
+		}
+		else if(temp2 == 'C') {
+		  ss >> temp;
+		  j++;
+		  set.push_back(temp);
+		}
+		else if(temp2 == '&') {
+		  index = j+1;
+		  break;
+		}  
+	}
+  }
+  setB = set;
+  for(int i = index; i < qs.size(); i++) {
+	  ss >> temp2;
+	  if(temp2 == '=') {
+		  ss >> temp;
+		  i++;	
+		  if(temp == 0) {
+			  break;
+		  }
+		  boxes.push_back(temp);
+	  }
   }
 }
 
@@ -103,6 +148,7 @@ void printpower(vector<vector<int>>& power) {
       cout << temp[j] << " ";
     }
     cout << endl;
+    cout << "</br>";
   }
 }
 
@@ -112,6 +158,7 @@ void printproduct(vector<vector<int>>& product) {
       temp = product[i];
       cout << temp[0] << ", " << temp[1] << endl;
   }
+  cout << "</br>";
 }
 
 void printeven(vector<vector<vector<int>>>& relations) {
@@ -128,12 +175,18 @@ void printeven(vector<vector<vector<int>>>& relations) {
       cout << "), ";
     }
     cout << endl;
+    cout << "</br>";
   }
 }
 
 int main() {
-  vector<int> working = {1, 2, 3, 4, 5};
-  vector<int> setB = {3, 4};
+  cout << "Content-type: text/html\n\n" << endl;
+  string qs(getenv("QUERY_STRING"));
+  //string qs = "a=1%2C2%2C3&b=1%2C2&power=1&transitive=4&submit=Submit";
+  vector<int> working;
+  vector<int> setB;
+  vector<int> boxes;
+  parse(qs, working, setB, boxes);
   vector<int> binary;
   vector<vector<int>> power;
   vector<vector<int>> product;
@@ -145,7 +198,7 @@ int main() {
   cartesian(working, setB, product);
   evenroll(product, relations);
   transitive(power);
-  //printpower(power);
-  //printproduct(product);
-  //printeven(relations);
+  printpower(power);
+  printproduct(product);
+  printeven(relations);
 }
