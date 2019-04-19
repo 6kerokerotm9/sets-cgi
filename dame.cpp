@@ -66,11 +66,32 @@ void evenroll(vector<vector<int>>& product, vector<vector<vector<int>>>& relatio
   }
 }
 
-void transitive(vector<int>& working) {
-  for(int i = 0; i < working.size()-1; i++) {
-    for(int j = i+1; j < working.size(); j++) {
-      cout << working[i] << ", " << working[j] << endl;
-    }
+void transitive(vector<vector<int>>& power) {
+  vector<vector<int>> pairs;
+  vector<int> temp;
+  vector<int> temp2;
+  vector<int> temp3;
+  for(int i = 0; i < power.size(); i++) {
+	temp = power[i];
+    if(temp.size() == 2) {
+      pairs.push_back(temp);
+	}
+  }
+  for(int i = 0; i < pairs.size()-1; i++) {
+    temp = pairs[i];
+	for(int j = i+1; j < pairs.size(); j++) {
+	  temp2 = pairs[j];
+	  if(temp[1] == temp2[0]) {
+	    for(int k = 0; k < pairs.size(); k++) {
+	      temp3 = pairs[k];
+		  if(temp3[0] == temp[0] && temp3[1] == temp2[1]) {
+		    cout << "(" << temp[0] << ", " << temp[1] << "), ";
+		    cout << "(" << temp2[0] << ", " << temp2[1] << "), ";
+		    cout << "(" << temp3[0] << ", " << temp3[1] << "), " << endl;
+		  }
+	    }
+	  }
+	}
   }
 }
 
@@ -111,7 +132,7 @@ void printeven(vector<vector<vector<int>>>& relations) {
 }
 
 int main() {
-  vector<int> working = {1, 2, 3, 4};
+  vector<int> working = {1, 2, 3, 4, 5};
   vector<int> setB = {3, 4};
   vector<int> binary;
   vector<vector<int>> power;
@@ -123,8 +144,8 @@ int main() {
   powerset(working, power);
   cartesian(working, setB, product);
   evenroll(product, relations);
-  //transitive(working);
+  transitive(power);
   //printpower(power);
   //printproduct(product);
-  printeven(relations);
+  //printeven(relations);
 }
